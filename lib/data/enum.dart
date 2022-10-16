@@ -1,0 +1,1 @@
+enum NotifType { success, failed }
