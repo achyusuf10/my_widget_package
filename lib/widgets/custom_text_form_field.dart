@@ -75,13 +75,13 @@ class CustomTextFormField extends StatelessWidget {
       cursorColor: cursorColor,
       keyboardType: inputType,
       controller: controller,
-      style: textStyle?.copyWith(fontSize: 12.sp),
+      style: textStyle?.copyWith(fontSize: 13.sp),
       maxLines: maxLines,
       enabled: enabled,
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
         labelText: (useLabel) ? hintText : null,
-        labelStyle: labelStyle?.copyWith(fontSize: 12.sp),
+        labelStyle: labelStyle?.copyWith(fontSize: 13.sp),
         errorBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(8.0),
@@ -104,7 +104,7 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
         hintText: hintText,
-        hintStyle: hintStyle?.copyWith(fontSize: 12.sp),
+        hintStyle: hintStyle?.copyWith(fontSize: 13.sp),
         floatingLabelStyle: floatingLabelStyle?.copyWith(fontSize: 8.sp),
         isDense: true,
         errorStyle: const TextStyle(color: Colors.red),
