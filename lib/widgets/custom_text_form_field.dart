@@ -107,7 +107,9 @@ class CustomTextFormField extends StatelessWidget {
         hintStyle: hintStyle?.copyWith(fontSize: 13.sp),
         floatingLabelStyle: floatingLabelStyle?.copyWith(fontSize: 8.sp),
         isDense: true,
-        errorStyle: const TextStyle(color: Colors.red),
+        errorStyle: (errorStyle == null)
+            ? const TextStyle(color: Colors.red)
+            : errorStyle?.copyWith(color: Colors.red),
         contentPadding: contentPadding ?? const EdgeInsets.all(20),
       ),
       obscureText: obs,
