@@ -31,7 +31,6 @@ class CustomTextFormField extends StatelessWidget {
   final TextStyle? errorStyle;
   final TextStyle? hintStyle;
   final TextStyle? floatingLabelStyle;
-  final Color? cursorColor;
 
   const CustomTextFormField({
     this.needValidate = true,
@@ -62,7 +61,6 @@ class CustomTextFormField extends StatelessWidget {
     this.errorStyle,
     this.hintStyle,
     this.floatingLabelStyle,
-    this.cursorColor,
   }) : super(key: key);
 
   @override
@@ -72,7 +70,7 @@ class CustomTextFormField extends StatelessWidget {
       minLines: 1,
       autovalidateMode: autovalidateMode ?? AutovalidateMode.onUserInteraction,
       maxLength: (maxLength != null) ? maxLength : null,
-      cursorColor: cursorColor,
+      cursorColor: Theme.of(context).focusColor,
       keyboardType: inputType,
       controller: controller,
       style: textStyle?.copyWith(fontSize: 13.sp),
@@ -81,7 +79,9 @@ class CustomTextFormField extends StatelessWidget {
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
         labelText: (useLabel) ? hintText : null,
-        labelStyle: labelStyle?.copyWith(fontSize: 13.sp),
+        labelStyle: (labelStyle == null)
+            ? Theme.of(context).inputDecorationTheme.labelStyle
+            : labelStyle?.copyWith(fontSize: 13.sp, color: Colors.black54),
         errorBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(8.0),
@@ -104,11 +104,15 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
         hintText: hintText,
-        hintStyle: hintStyle?.copyWith(fontSize: 13.sp),
-        floatingLabelStyle: floatingLabelStyle?.copyWith(fontSize: 8.sp),
+        hintStyle: (hintStyle == null)
+            ? Theme.of(context).inputDecorationTheme.hintStyle
+            : hintStyle?.copyWith(fontSize: 13.sp, color: Colors.black54),
+        floatingLabelStyle: (floatingLabelStyle == null)
+            ? Theme.of(context).inputDecorationTheme.floatingLabelStyle
+            : floatingLabelStyle?.copyWith(fontSize: 8.sp),
         isDense: true,
         errorStyle: (errorStyle == null)
-            ? const TextStyle(color: Colors.red)
+            ? Theme.of(context).inputDecorationTheme.errorStyle
             : errorStyle?.copyWith(color: Colors.red),
         contentPadding: contentPadding ?? const EdgeInsets.all(20),
       ),
