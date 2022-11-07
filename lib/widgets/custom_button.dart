@@ -3,16 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final Color bgColor;
+  final Color? bgColor;
   final Widget child;
   final double borderRadius;
   final double? width;
   final double? height;
   final BorderSide borderSide;
   final EdgeInsets? padding;
+  final MaterialTapTargetSize? materialTapTargetSize;
   const CustomButton({
     required this.onPressed,
-    required this.bgColor,
+    this.bgColor,
     required this.child,
     this.borderRadius = 8,
     this.borderSide = BorderSide.none,
@@ -20,6 +21,7 @@ class CustomButton extends StatelessWidget {
     this.width,
     this.height,
     this.padding,
+    this.materialTapTargetSize,
   }) : super(key: key);
 
   @override
@@ -32,9 +34,10 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
           side: borderSide,
         ),
-        backgroundColor: bgColor,
+        backgroundColor: bgColor ?? Theme.of(context).primaryColor,
         foregroundColor: Colors.black,
         minimumSize: Size(width ?? double.infinity, height ?? 48.h),
+        tapTargetSize: materialTapTargetSize,
       ),
       child: child,
     );

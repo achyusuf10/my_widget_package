@@ -7,7 +7,7 @@ import '../custom_button.dart';
 class DialogNotif extends StatelessWidget {
   final String message;
   final NotifType notifType;
-  final Color colorTheme;
+  final Color? colorTheme;
   final Function additionalOnNegativeTap;
   final TextStyle titleStyle;
   final TextStyle descStyle;
@@ -17,7 +17,7 @@ class DialogNotif extends StatelessWidget {
     required this.message,
     required this.notifType,
     required this.additionalOnNegativeTap,
-    this.colorTheme = Colors.blue,
+    this.colorTheme,
     required this.titleStyle,
     required this.descStyle,
     required this.closeSytyle,
@@ -51,7 +51,9 @@ class DialogNotif extends StatelessWidget {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(10),
                 ),
-                color: colorTheme,
+                color: (colorTheme == null)
+                    ? Theme.of(context).primaryColor
+                    : colorTheme,
               ),
               child: Image.asset(
                 (notifType == NotifType.success)
@@ -94,7 +96,9 @@ class DialogNotif extends StatelessWidget {
             additionalOnNegativeTap();
             Navigator.pop(context);
           },
-          bgColor: colorTheme,
+          bgColor: (colorTheme == null)
+              ? Theme.of(context).primaryColor
+              : colorTheme!,
           child: Text(
             'Tutup',
             style: closeSytyle.copyWith(color: Colors.white),

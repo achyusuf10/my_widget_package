@@ -98,9 +98,9 @@ class CustomTextFormField extends StatelessWidget {
             borderSide: BorderSide.none,
           ),
           shadow: BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.2),
             blurRadius: 3,
-            offset: const Offset(0, 1.5),
+            offset: const Offset(0.5, 2),
           ),
         ),
         hintText: hintText,
