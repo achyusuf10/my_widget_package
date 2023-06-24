@@ -2,61 +2,63 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerWidget extends StatelessWidget {
-  final double width, height;
+  final double width;
   final ShapeBorder shapeBorder;
   final Widget? child;
   final bool? isList;
   final int? itemCount;
-  final int? itemHeight;
+  final double? itemHeight;
   final int? separatorHeight;
+  final double aspectRatio;
+  final bool isScrollable;
 
   const ShimmerWidget.rectangular({
-    Key? key,
-    this.width = double.infinity,
-    required this.height,
-    this.shapeBorder = const RoundedRectangleBorder(),
-    this.child,
-    this.isList,
-    this.itemCount,
-    this.itemHeight,
-    this.separatorHeight,
-  }) : super(key: key);
+    super.key,
+    required this.width,
+    this.aspectRatio = 1,
+  })  : itemCount = 0,
+        itemHeight = 0,
+        separatorHeight = 0,
+        child = null,
+        isScrollable = false,
+        shapeBorder = const RoundedRectangleBorder(),
+        isList = false;
 
   const ShimmerWidget.circular({
-    Key? key,
+    super.key,
     required this.width,
-    required this.height,
-    this.shapeBorder = const CircleBorder(),
-    this.child,
-    this.isList,
-    this.itemCount,
-    this.itemHeight,
-    this.separatorHeight,
-  }) : super(key: key);
+    this.aspectRatio = 1,
+  })  : itemCount = 0,
+        itemHeight = 0,
+        separatorHeight = 0,
+        child = null,
+        isScrollable = false,
+        shapeBorder = const CircleBorder(),
+        isList = false;
 
   const ShimmerWidget.noShape({
-    Key? key,
-    this.width = 0,
-    this.height = 0,
-    this.shapeBorder = const RoundedRectangleBorder(),
+    super.key,
     required this.child,
-    this.isList,
-    this.itemCount,
-    this.itemHeight,
-    this.separatorHeight,
-  }) : super(key: key);
+  })  : itemCount = 0,
+        itemHeight = 0,
+        separatorHeight = 0,
+        width = 0,
+        aspectRatio = 0,
+        isScrollable = false,
+        shapeBorder = const RoundedRectangleBorder(),
+        isList = false;
 
   const ShimmerWidget.listItem({
-    Key? key,
-    this.width = 0,
-    this.height = 0,
-    this.shapeBorder = const RoundedRectangleBorder(),
-    this.child,
-    this.isList = true,
-    this.itemCount = 10,
+    super.key,
+    required this.itemCount,
     this.itemHeight = 40,
     this.separatorHeight = 10,
-  }) : super(key: key);
+    this.isScrollable = false,
+  })  : shapeBorder = const RoundedRectangleBorder(),
+        width = 0,
+        child = null,
+        aspectRatio = 0,
+        isList = true;
 
   @override
   Widget build(BuildContext context) {
@@ -74,16 +76,18 @@ class ShimmerWidget extends StatelessWidget {
               separatorBuilder: (context, index) => SizedBox(
                 height: separatorHeight!.toDouble(),
               ),
-              primary: false,
+              primary: isScrollable,
               shrinkWrap: true,
             )
           : (child == null)
-              ? Container(
-                  height: height,
-                  width: width,
-                  decoration: ShapeDecoration(
-                    shape: shapeBorder,
-                    color: Colors.grey[300],
+              ? AspectRatio(
+                  aspectRatio: aspectRatio,
+                  child: Container(
+                    width: width,
+                    decoration: ShapeDecoration(
+                      shape: shapeBorder,
+                      color: Colors.grey[300],
+                    ),
                   ),
                 )
               : child!,

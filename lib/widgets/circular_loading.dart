@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class CircularLoading extends StatelessWidget {
   final double? diameter;
   final double? strokeWidth;
+
+  /// Default Color pakai Primary Color
   final Color? customColor;
   const CircularLoading({
     this.diameter,
@@ -15,19 +17,19 @@ class CircularLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: (diameter == null)
-          ? circularProgressIndicator()
+          ? circularProgressIndicator(context)
           : SizedBox(
               height: diameter,
               width: diameter,
-              child: circularProgressIndicator(),
+              child: circularProgressIndicator(context),
             ),
     );
   }
 
-  Widget circularProgressIndicator() {
+  Widget circularProgressIndicator(BuildContext context) {
     return CircularProgressIndicator(
       strokeWidth: (strokeWidth == null) ? 6 : strokeWidth!,
-      color: customColor ?? const Color.fromARGB(255, 54, 165, 255),
+      color: customColor ?? Theme.of(context).primaryColor,
     );
   }
 }

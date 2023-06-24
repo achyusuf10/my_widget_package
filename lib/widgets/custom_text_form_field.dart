@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? prefix;
   final int? maxLines;
   final bool readOnly;
-  final TextInputType inputType;
+  final TextInputType keyboardType;
   final bool showError;
   final List<TextInputFormatter> inputFormatters;
   final bool enabled;
@@ -31,6 +31,11 @@ class CustomTextFormField extends StatelessWidget {
   final TextStyle? errorStyle;
   final TextStyle? hintStyle;
   final TextStyle? floatingLabelStyle;
+  final Color? fillColor;
+  final bool useBoxShadow;
+  final BorderSide borderSide;
+  final double? borderRadius;
+  final int minLines;
 
   const CustomTextFormField({
     this.needValidate = true,
@@ -45,7 +50,7 @@ class CustomTextFormField extends StatelessWidget {
     this.showError = false,
     this.enabled = true,
     this.inputFormatters = const [],
-    this.inputType = TextInputType.text,
+    this.keyboardType = TextInputType.text,
     this.maxLength,
     this.validator,
     this.suffix,
@@ -61,60 +66,103 @@ class CustomTextFormField extends StatelessWidget {
     this.errorStyle,
     this.hintStyle,
     this.floatingLabelStyle,
+    this.fillColor,
+    this.useBoxShadow = true,
+    this.borderRadius,
+    this.minLines = 1,
+  })  : borderSide = BorderSide.none,
+        super(key: key);
+
+  const CustomTextFormField.outlined({
+    this.needValidate = true,
+    this.errorMessage = 'Harus terisi',
+    Key? key,
+    this.obs = false,
+    required this.controller,
+    required this.hintText,
+    this.prefix,
+    this.readOnly = false,
+    this.maxLines = 1,
+    this.showError = false,
+    this.enabled = true,
+    this.inputFormatters = const [],
+    this.keyboardType = TextInputType.text,
+    this.maxLength,
+    this.validator,
+    this.suffix,
+    this.onChanged,
+    this.autovalidateMode,
+    this.isVersionTwo = false,
+    this.onTap,
+    this.prefixText,
+    this.useLabel = true,
+    this.contentPadding,
+    this.textStyle,
+    this.labelStyle,
+    this.errorStyle,
+    this.hintStyle,
+    this.floatingLabelStyle,
+    this.fillColor,
+    this.useBoxShadow = true,
+    required this.borderSide,
+    this.borderRadius,
+    this.minLines = 1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       onTap: onTap,
-      minLines: 1,
+      minLines: minLines,
       autovalidateMode: autovalidateMode ?? AutovalidateMode.onUserInteraction,
       maxLength: (maxLength != null) ? maxLength : null,
       cursorColor: Theme.of(context).focusColor,
-      keyboardType: inputType,
+      keyboardType: keyboardType,
       controller: controller,
       style: textStyle?.copyWith(fontSize: 13.sp),
       maxLines: maxLines,
       enabled: enabled,
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
+        fillColor: fillColor,
+        filled: fillColor == null ? false : true,
         labelText: (useLabel) ? hintText : null,
         labelStyle: (labelStyle == null)
             ? Theme.of(context).inputDecorationTheme.labelStyle
-            : labelStyle?.copyWith(fontSize: 13.sp, color: Colors.black54),
-        errorBorder: const OutlineInputBorder(
+            : labelStyle,
+        errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(8.0),
+            Radius.circular(borderRadius ?? 8.r),
           ),
-          borderSide: BorderSide(color: Colors.red),
+          borderSide: const BorderSide(color: Colors.red),
         ),
         prefixIcon: prefix,
         suffixIcon: suffix,
         border: DecoratedInputBorder(
-          child: const OutlineInputBorder(
+          child: OutlineInputBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(8.0),
+              Radius.circular(borderRadius ?? 8.r),
             ),
-            borderSide: BorderSide.none,
+            borderSide: borderSide,
           ),
           shadow: BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 3,
-            offset: const Offset(0.5, 2),
-          ),
+              color: Colors.black.withOpacity((useBoxShadow) ? 0.3 : 0),
+              blurRadius: (useBoxShadow) ? 3 : 0,
+              offset: (useBoxShadow) ? const Offset(0, 2) : const Offset(0, 0),
+              spreadRadius: (useBoxShadow) ? 0.5 : 0),
         ),
         hintText: hintText,
         hintStyle: (hintStyle == null)
             ? Theme.of(context).inputDecorationTheme.hintStyle
-            : hintStyle?.copyWith(fontSize: 13.sp, color: Colors.black54),
+            : hintStyle,
         floatingLabelStyle: (floatingLabelStyle == null)
             ? Theme.of(context).inputDecorationTheme.floatingLabelStyle
-            : floatingLabelStyle?.copyWith(fontSize: 8.sp),
+            : floatingLabelStyle,
         isDense: true,
         errorStyle: (errorStyle == null)
             ? Theme.of(context).inputDecorationTheme.errorStyle
             : errorStyle?.copyWith(color: Colors.red),
-        contentPadding: contentPadding ?? const EdgeInsets.all(20),
+        contentPadding: contentPadding ?? const EdgeInsets.all(18),
       ),
       obscureText: obs,
       onChanged: onChanged,
